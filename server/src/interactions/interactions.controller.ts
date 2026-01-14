@@ -1,34 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common';
 import { InteractionsService } from './interactions.service';
 import { CreateInteractionDto } from './dto/create-interaction.dto';
-import { UpdateInteractionDto } from './dto/update-interaction.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { Request as ExpressRequest } from 'express';
 
+interface AuthenticatedRequest extends ExpressRequest {
+  user: { userId: string; email: string };
+}
+
+@UseGuards(AuthGuard('jwt'))
 @Controller('interactions')
 export class InteractionsController {
   constructor(private readonly interactionsService: InteractionsService) {}
 
   @Post()
-  create(@Body() createInteractionDto: CreateInteractionDto) {
-    return this.interactionsService.create(createInteractionDto);
+  create(@Request() req: AuthenticatedRequest, @Body() createInteractionDto: CreateInteractionDto) {
+    return this.interactionsService.create(req.user.userId, createInteractionDto);
   }
 
   @Get()
-  findAll() {
-    return this.interactionsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.interactionsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInteractionDto: UpdateInteractionDto) {
-    return this.interactionsService.update(+id, updateInteractionDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.interactionsService.remove(+id);
+  findAll(@Request() req: AuthenticatedRequest) {
+    return this.interactionsService.findAll(req.user.userId);
   }
 }
