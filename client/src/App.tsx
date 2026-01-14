@@ -1,17 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
+import DashboardLayout from './layouts/DashboardLayout';
 import { useAuth } from './hooks/useAuth';
 
-// Placeholder for Dashboard
-const Dashboard = () => (
-  <div className="p-8">
-    <h1 className="text-2xl font-bold">Dashboard</h1>
-    <p>You are logged in!</p>
-  </div>
-);
+// Placeholder Pages
+const Dashboard = () => <div className="text-gray-600">Dashboard Stats Coming Soon...</div>;
+const Clients = () => <div className="text-gray-600">Clients List Coming Soon...</div>;
+const Projects = () => <div className="text-gray-600">Projects List Coming Soon...</div>;
 
-// Protected Route Wrapper
 const PrivateRoute = ({ children }: { children: React.JSX.Element }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" />;
@@ -23,17 +20,15 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         
-        {/* Protected Dashboard Route */}
-        <Route 
-          path="/dashboard" 
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          } 
-        />
-        
-        {/* Default redirect */}
+        {/* Protected Routes wrapped in Layout */}
+        <Route element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/reminders" element={<div className="text-gray-600">Reminders...</div>} />
+          <Route path="/interactions" element={<div className="text-gray-600">Interactions...</div>} />
+        </Route>
+
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </Router>
