@@ -1,1 +1,23 @@
-export class CreateClientDto {}
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+
+export class CreateClientDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  phone: string;
+
+  @IsString()
+  @IsOptional()
+  company?: string;
+
+  @IsString()
+  @IsOptional()
+  notes?: string;
+}
