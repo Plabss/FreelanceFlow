@@ -10,7 +10,7 @@ export class RemindersService {
   async create(userId: string, createReminderDto: CreateReminderDto) {
     const { clientId, projectId, ...rest } = createReminderDto;
 
-    // Validate ownership if IDs are provided (Optional: You can reuse the logic from Interactions)
+    // Validate ownership if IDs are provided
 
     return this.prisma.reminder.create({
       data: {
