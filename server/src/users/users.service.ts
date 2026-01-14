@@ -38,6 +38,12 @@ export class UsersService {
     return result;
   }
 
+  async findByEmail(email: string) {
+    return this.prisma.user.findUnique({
+      where: { email },
+    });
+  }
+
   // Placeholders for other standard CRUD methods (keep these to avoid errors)
   findAll() { return `This action returns all users`; }
   findOne(id: number) { return `This action returns a #${id} user`; }
