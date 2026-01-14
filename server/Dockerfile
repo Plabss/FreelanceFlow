@@ -30,6 +30,9 @@ WORKDIR /app
 # Set env to production
 ENV NODE_ENV production
 
+# Install OpenSSL so Prisma can run
+RUN apk add --no-cache openssl
+
 # Copy only necessary files from builder
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
