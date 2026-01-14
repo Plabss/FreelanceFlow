@@ -5,9 +5,10 @@ import DashboardLayout from './layouts/DashboardLayout';
 import { useAuth } from './hooks/useAuth';
 import ClientsPage from './pages/ClientsPage';
 import ProjectsPage from './pages/ProjectsPage';
+import DashboardPage from './pages/DashboardPage';
 
 // Placeholder Pages
-const Dashboard = () => <div className="text-gray-600">Dashboard Stats Coming Soon...</div>;
+// const Dashboard = () => <div className="text-gray-600">Dashboard Stats Coming Soon...</div>;
 // const Clients = () => <div className="text-gray-600">Clients List Coming Soon...</div>;
 // const Projects = () => <div className="text-gray-600">Projects List Coming Soon...</div>;
 
@@ -24,7 +25,7 @@ function App() {
         
         {/* Protected Routes wrapped in Layout */}
         <Route element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/reminders" element={<div className="text-gray-600">Reminders...</div>} />
