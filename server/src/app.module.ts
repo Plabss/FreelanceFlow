@@ -7,9 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { ClientsModule } from './clients/clients.module';
 import { ProjectsModule } from './projects/projects.module';
 import { InteractionsModule } from './interactions/interactions.module';
+import { RemindersModule } from './reminders/reminders.module';
 
 @Module({
-  imports: [UsersModule, PrismaModule, AuthModule, ClientsModule, ProjectsModule, InteractionsModule],
+  imports: [UsersModule, PrismaModule, AuthModule, ClientsModule, ProjectsModule, InteractionsModule, RemindersModule],
   controllers: [AppController],
   providers: [AppService],
 })
