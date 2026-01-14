@@ -8,6 +8,8 @@ import ProjectsPage from './pages/ProjectsPage';
 import DashboardPage from './pages/DashboardPage';
 import RemindersPage from './pages/RemindersPage';
 import InteractionsPage from './pages/InteractionsPage';
+import LandingPage from './pages/LandingPage';
+import RegisterPage from './pages/RegisterPage';
 
 // Placeholder Pages
 // const Dashboard = () => <div className="text-gray-600">Dashboard Stats Coming Soon...</div>;
@@ -23,7 +25,10 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         
         {/* Protected Routes wrapped in Layout */}
         <Route element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
