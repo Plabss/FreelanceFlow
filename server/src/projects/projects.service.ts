@@ -41,8 +41,41 @@ export class ProjectsService {
     });
   }
 
-  // Placeholders
-  findOne(id: number) { return `This action returns a #${id} project`; }
-  update(id: number, updateProjectDto: UpdateProjectDto) { return `This action updates a #${id} project`; }
-  remove(id: number) { return `This action removes a #${id} project`; }
+  // 3. Find One (Secure)
+  async findOne(userId: string, projectId: string) {
+    const project = await this.prisma.project.findFirst({
+      where: {
+        id: projectId,
+        userId: userId, // Ownership check
+      },
+      include: { client: true },
+    });
+
+    if (!project) {
+      throw new NotFoundException('Project not found');
+    }
+
+    return project;
+  }
+
+  // 4. Update
+  async update(userId: string, projectId: string, updateProjectDto: UpdateProjectDto) {
+    // Check existence/ownership first
+    await this.findOne(userId, projectId);
+
+    return this.prisma.project.update({
+      where: { id: projectId },
+      data: updateProjectDto,
+    });
+  }
+
+  // 5. Remove
+  async remove(userId: string, projectId: string) {
+    // Check existence/ownership first
+    await this.findOne(userId, projectId);
+
+    return this.prisma.project.delete({
+      where: { id: projectId },
+    });
+  }
 }

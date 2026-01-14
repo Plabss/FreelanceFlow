@@ -25,11 +25,21 @@ export class ProjectsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) { return this.projectsService.findOne(+id); }
+  findOne(@Request() req: AuthenticatedRequest, @Param('id') id: string) {
+    return this.projectsService.findOne(req.user.userId, id);
+  }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) { return this.projectsService.update(+id, updateProjectDto); }
+  update(
+    @Request() req: AuthenticatedRequest,
+    @Param('id') id: string,
+    @Body() updateProjectDto: UpdateProjectDto,
+  ) {
+    return this.projectsService.update(req.user.userId, id, updateProjectDto);
+  }
 
   @Delete(':id')
-  remove(@Param('id') id: string) { return this.projectsService.remove(+id); }
+  remove(@Request() req: AuthenticatedRequest, @Param('id') id: string) {
+    return this.projectsService.remove(req.user.userId, id);
+  }
 }
