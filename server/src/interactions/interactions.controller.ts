@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Request, Param, Delete, } from '@nestjs/common';
 import { InteractionsService } from './interactions.service';
 import { CreateInteractionDto } from './dto/create-interaction.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -21,5 +21,10 @@ export class InteractionsController {
   @Get()
   findAll(@Request() req: AuthenticatedRequest) {
     return this.interactionsService.findAll(req.user.userId);
+  }
+
+  @Delete(':id') 
+  remove(@Request() req: AuthenticatedRequest, @Param('id') id: string) {
+    return this.interactionsService.remove(req.user.userId, id);
   }
 }

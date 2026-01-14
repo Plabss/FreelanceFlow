@@ -42,9 +42,19 @@ export class InteractionsService {
     });
   }
 
-  // Basic Delete/Update Logic (Optional for now, but good to have)
-  async remove(userId: string, id: number) {
-     // Implementation similar to clients/projects
-     return `This action removes a #${id} interaction`;
+  async remove(userId: string, id: string) { 
+    // 1. Verify it exists and belongs to user
+    const interaction = await this.prisma.interaction.findFirst({
+      where: { id, userId },
+    });
+
+    if (!interaction) {
+      throw new NotFoundException('Interaction not found');
+    }
+
+    // 2. Delete it
+    return this.prisma.interaction.delete({
+      where: { id },
+    });
   }
 }
