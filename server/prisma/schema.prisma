@@ -9,6 +9,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ProjectStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
 model User {
   id        String   @id @default(uuid()) // Using UUID is safer than Integer IDs
   email     String   @unique
@@ -18,6 +25,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   clients   Client[]
+  projects  Project[]
 }
 
 model Client {
@@ -32,4 +40,24 @@ model Client {
 
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+
+  projects  Project[]
+}
+
+model Project {
+  id        String        @id @default(uuid())
+  title     String
+  budget    Float?
+  deadline  DateTime?
+  status    ProjectStatus @default(PENDING)
+  
+  // Relations
+  clientId  String
+  client    Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  userId    String
+  user      User          @relation(fields: [userId], references: [id])
+
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
