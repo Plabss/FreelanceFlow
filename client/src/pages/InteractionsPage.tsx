@@ -5,7 +5,7 @@ import { getClients } from '../api/clientApi';
 import { getProjects } from '../api/projectApi';
 import InteractionCard from '../components/InteractionCard';
 import Modal from '../components/Modal';
-import { Loader2, Plus, Filter } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 
 const InteractionsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

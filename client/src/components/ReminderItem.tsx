@@ -1,4 +1,4 @@
-import { Check, Trash2, Calendar, Clock } from 'lucide-react';
+import { Check, Trash2, Calendar } from 'lucide-react';
 import { type Reminder } from '../types';
 import clsx from 'clsx';
 

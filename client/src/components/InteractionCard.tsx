@@ -1,4 +1,4 @@
-import { Phone, Mail, Users, FileText, Trash2, Calendar } from 'lucide-react';
+import { Phone, Mail, Users, FileText, Trash2 } from 'lucide-react';
 import { type Interaction } from '../types';
 import clsx from 'clsx';
 
