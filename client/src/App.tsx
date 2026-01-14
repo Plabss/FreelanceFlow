@@ -6,6 +6,8 @@ import { useAuth } from './hooks/useAuth';
 import ClientsPage from './pages/ClientsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import DashboardPage from './pages/DashboardPage';
+import RemindersPage from './pages/RemindersPage';
+import InteractionsPage from './pages/InteractionsPage';
 
 // Placeholder Pages
 // const Dashboard = () => <div className="text-gray-600">Dashboard Stats Coming Soon...</div>;
@@ -28,8 +30,8 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/reminders" element={<div className="text-gray-600">Reminders...</div>} />
-          <Route path="/interactions" element={<div className="text-gray-600">Interactions...</div>} />
+          <Route path="/reminders" element={<RemindersPage />} />
+          <Route path="/interactions" element={<InteractionsPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/dashboard" />} />
