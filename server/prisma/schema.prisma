@@ -16,16 +16,24 @@ enum ProjectStatus {
   CANCELLED
 }
 
+enum InteractionType {
+  CALL
+  MEETING
+  EMAIL
+  OTHER
+}
+
 model User {
   id        String   @id @default(uuid()) // Using UUID is safer than Integer IDs
   email     String   @unique
-  password  String   // Will be hashed
+  password  String   
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   clients   Client[]
   projects  Project[]
+  interactions Interaction[]
 }
 
 model Client {
@@ -42,6 +50,7 @@ model Client {
   user      User     @relation(fields: [userId], references: [id])
 
   projects  Project[]
+  interactions Interaction[]
 }
 
 model Project {
@@ -57,6 +66,28 @@ model Project {
   
   userId    String
   user      User          @relation(fields: [userId], references: [id])
+
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  interactions Interaction[]
+}
+
+model Interaction {
+  id        String          @id @default(uuid())
+  type      InteractionType
+  notes     String
+  date      DateTime        @default(now()) // When did it happen?
+  
+  // Relations
+  clientId  String
+  client    Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  projectId String?         // Optional: specific to a project
+  project   Project?        @relation(fields: [projectId], references: [id])
+  
+  userId    String
+  user      User            @relation(fields: [userId], references: [id])
 
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
